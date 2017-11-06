@@ -2,9 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: terrorjack/rakuen:nightly-2017-11-05
+      - image: terrorjack/rakuen:nightly-2017-11-06
     steps:
       - checkout
-      - run: |
-          apt install -y cmake ninja-build
-          stack --no-terminal build --haddock
+      - run: stack --no-terminal build --haddock

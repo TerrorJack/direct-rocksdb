@@ -11,7 +11,9 @@ build_script:
   - stack --no-terminal setup > NUL
   - stack --no-terminal exec pacman -- -Syu --force --noconfirm --noprogressbar
   - stack --no-terminal exec pacman -- -Syu --force --noconfirm --noprogressbar
-  - stack --no-terminal exec pacman -- -Syu mingw-w64-x86_64-{cmake,gcc,ninja} --force --needed --noconfirm --noprogressbar
+  - stack --no-terminal exec pacman -- -S mingw-w64-x86_64-cmake --force --needed --noconfirm --noprogressbar
+  - stack --no-terminal exec pacman -- -S mingw-w64-x86_64-gcc --force --needed --noconfirm --noprogressbar
+  - stack --no-terminal exec pacman -- -S mingw-w64-x86_64-ninja --force --needed --noconfirm --noprogressbar
   - stack --no-terminal build --haddock
 
 test: off

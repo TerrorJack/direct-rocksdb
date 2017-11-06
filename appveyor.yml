@@ -1,0 +1,17 @@
+version: 0.0.1.{build}
+
+shallow_clone: true
+
+cache:
+  - "%APPDATA%\\stack"
+  - .stack-work
+
+build_script:
+  - choco install haskell-stack
+  - stack --no-terminal setup > NUL
+  - stack --no-terminal exec pacman -- -Syu --force --noconfirm --noprogressbar
+  - stack --no-terminal exec pacman -- -Syu --force --noconfirm --noprogressbar
+  - stack --no-terminal exec pacman -- -Syu mingw-w64-x86_64-{cmake,gcc,ninja} --force --needed --noconfirm --noprogressbar
+  - stack --no-terminal build --haddock
+
+test: off

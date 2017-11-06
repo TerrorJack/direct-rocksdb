@@ -1,0 +1,5 @@
+resolver: ghc-8.2.1
+packages:
+  - location: ../cabal-toolkit
+    extra-dep: true
+  - .

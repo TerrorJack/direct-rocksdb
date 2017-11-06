@@ -1,0 +1,31 @@
+name: direct-rocksdb
+version: 0.0.1
+category: Database
+synopsis: Bindings to RocksDB.
+stability: alpha
+maintainer: Shao Cheng <astrohavoc@gmail.com>
+copyright: (c) 2017 Shao Cheng
+license: BSD3
+github: TerrorJack/direct-rocksdb
+
+extra-source-files:
+  - CHANGELOG.md
+  - LICENSE
+  - README.md
+  - rocksdb-5.8/**/**
+
+custom-setup:
+  dependencies:
+    - base >= 4.10 && < 5
+    - Cabal >= 2.0 && < 2.2
+    - cabal-toolkit
+    - directory
+    - filepath
+
+ghc-options: -Wall
+
+dependencies:
+  - base >= 4.10 && < 5
+
+library:
+  source-dirs: src

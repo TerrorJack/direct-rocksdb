@@ -3,12 +3,27 @@
 import Data.Foldable
 import Distribution.Simple
 import Distribution.Simple.LocalBuildInfo
+import Distribution.Simple.Program
 import Distribution.Simple.Toolkit
 import Distribution.Types.BuildInfo
 import Distribution.Types.GenericPackageDescription
 import Distribution.Types.PackageDescription
+import Distribution.Verbosity
 import System.Directory
 import System.FilePath
+
+endOfFirstLineVersion :: Verbosity -> FilePath -> IO (Maybe Version)
+endOfFirstLineVersion =
+  findProgramVersion "--version" $ last . words . head . lines
+
+cmakeProgram :: Program
+cmakeProgram =
+  (simpleProgram "cmake") {programFindVersion = endOfFirstLineVersion}
+
+ninjaProgram :: Program
+ninjaProgram =
+  (simpleProgram "ninja")
+  {programFindVersion = findProgramVersion "--version" id}
 
 main :: IO ()
 main =

@@ -6,5 +6,6 @@ jobs:
     steps:
       - checkout
       - run: |
-          apt install -y gawk grep
+          apt install -y gawk
+          export NINJA_J=2
           stack --no-terminal test --haddock

@@ -8,6 +8,7 @@ import Distribution.Types.BuildInfo
 import Distribution.Types.GenericPackageDescription
 import Distribution.Types.PackageDescription
 import System.Directory
+import System.Environment
 import System.FilePath
 
 main :: IO ()
@@ -40,7 +41,14 @@ main =
               , "-G"
               , "Ninja"
               ]
-            runLBIProgram lbi ninjaProgram ["librocksdb.a"]
+            ninja_extra_args <-
+              do r <- lookupEnv "NINJA_J"
+                 pure $
+                   case r of
+                     Just s -> ["-j", s]
+                     _ -> []
+            runLBIProgram lbi ninjaProgram $
+              ninja_extra_args ++ ["librocksdb.a"]
             copyFile "librocksdb.a" $
               lib_installdir </> "lib" ++ rocksdb_libname <.> "a"
           pure

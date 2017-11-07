@@ -37,6 +37,7 @@ main =
               cmakeProgram
               [ rocksdb_srcdir
               , "-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=true"
+              , "-DROCKSDB_VERSION=5.8"
               , "-G"
               , "Ninja"
               ]

@@ -11,7 +11,7 @@ This package builds RocksDB in place and doesn't link with system-wide RocksDB. 
 
 * [`cmake`](https://cmake.org/)
 * [`ninja`](http://ninja-build.org/)
-* [`awk`]
+* `awk`
 
 ## Windows support
 

@@ -5,4 +5,4 @@ jobs:
       - image: terrorjack/rakuen:nightly-2017-11-06
     steps:
       - checkout
-      - run: stack --no-terminal build --haddock
+      - run: stack --no-terminal test --haddock

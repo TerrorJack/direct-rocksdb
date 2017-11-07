@@ -29,3 +29,11 @@ dependencies:
 
 library:
   source-dirs: src
+
+tests:
+  direct-rocksdb-test:
+    source-dirs: test
+    main: direct-rocksdb-test.hs
+    ghc-options: -threaded -with-rtsopts=-N
+    dependencies:
+      - direct-rocksdb

@@ -5,4 +5,6 @@ jobs:
       - image: terrorjack/rakuen:nightly-2017-11-06
     steps:
       - checkout
-      - run: stack --no-terminal test --haddock
+      - run: |
+          apt install -y gawk grep
+          stack --no-terminal test --haddock

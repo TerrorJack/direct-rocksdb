@@ -7,7 +7,6 @@ import Distribution.Simple.Toolkit
 import Distribution.Types.BuildInfo
 import Distribution.Types.GenericPackageDescription
 import Distribution.Types.PackageDescription
-import GHC.Conc
 import System.Directory
 import System.FilePath
 
@@ -41,8 +40,7 @@ main =
               , "-G"
               , "Ninja"
               ]
-            j <- getNumProcessors
-            runLBIProgram lbi ninjaProgram ["-j", show j, "librocksdb.a"]
+            runLBIProgram lbi ninjaProgram ["librocksdb.a"]
             copyFile "librocksdb.a" $
               lib_installdir </> "lib" ++ rocksdb_libname <.> "a"
           pure

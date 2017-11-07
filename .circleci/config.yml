@@ -6,5 +6,5 @@ jobs:
     steps:
       - checkout
       - run: |
-          apt install -y gawk
+          apt install -y gawk grep
           stack --no-terminal test --haddock

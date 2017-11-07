@@ -32,7 +32,14 @@ main =
           for_ [rocksdb_builddir, lib_installdir] $
             createDirectoryIfMissing True
           withCurrentDirectory rocksdb_builddir $ do
-            runLBIProgram lbi cmakeProgram [rocksdb_srcdir, "-G", "Ninja"]
+            runLBIProgram
+              lbi
+              cmakeProgram
+              [ rocksdb_srcdir
+              , "-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=true"
+              , "-G"
+              , "Ninja"
+              ]
             runLBIProgram lbi ninjaProgram ["librocksdb.a"]
             copyFile "librocksdb.a" $
               lib_installdir </> "lib" ++ rocksdb_libname <.> "a"

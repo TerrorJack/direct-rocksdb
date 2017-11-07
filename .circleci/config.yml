@@ -2,10 +2,9 @@ version: 2
 jobs:
   build:
     docker:
-      - image: terrorjack/rakuen:nightly-2017-11-06
+      - image: terrorjack/rakuen:nightly-2017-11-07
+    environment:
+      - NINJA_J: 2
     steps:
       - checkout
-      - run: |
-          apt install -y gawk
-          export NINJA_J=2
-          stack --no-terminal test --haddock
+      - run: stack --no-terminal test --haddock

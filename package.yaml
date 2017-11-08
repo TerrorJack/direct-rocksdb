@@ -32,7 +32,6 @@ flags:
 dependencies:
   - base >= 4.10 && < 5
   - bytestring
-  - safe-exceptions
 
 library:
   source-dirs: src
@@ -53,5 +52,6 @@ tests:
       - direct-rocksdb
       - directory
       - filepath
+      - safe-exceptions
     other-extensions:
       - OverloadedStrings

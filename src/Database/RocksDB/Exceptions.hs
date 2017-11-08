@@ -4,7 +4,7 @@ module Database.RocksDB.Exceptions
   ( RocksDBException(..)
   ) where
 
-import Control.Exception.Safe
+import Control.Exception
 import qualified Data.ByteString as BS
 
 newtype RocksDBException = RocksDBException

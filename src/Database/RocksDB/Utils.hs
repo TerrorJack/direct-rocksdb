@@ -4,7 +4,7 @@ module Database.RocksDB.Utils
   , withErrorMessagePtr
   ) where
 
-import Control.Exception.Safe
+import Control.Exception
 import qualified Data.ByteString as BS
 import Data.Foldable
 import Database.RocksDB.Exceptions
@@ -34,4 +34,4 @@ withErrorMessagePtr cont =
       then pure r
       else do
         msg <- BS.packCString p'
-        throw $ RocksDBException msg
+        throwIO $ RocksDBException msg

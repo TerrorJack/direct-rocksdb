@@ -5,7 +5,7 @@
 
 Bindings to [RocksDB](https://github.com/facebook/rocksdb).
 
-## Dependencies
+## Building
 
 This package builds RocksDB in place by default. This requires:
 
@@ -13,7 +13,9 @@ This package builds RocksDB in place by default. This requires:
 * [`ninja`](http://ninja-build.org/)
 * `awk`
 
-To link with system-wide RocksDB, use the `system-rocksdb` Cabal flag.
+You can use the `NINJA_J` environment variable to control the number of threads used by `ninja`, e.g. `NINJA_J=2`. This is a hack for building on CI, since `ninja` seems to fail to detect the actual number of CPU cores available.
+
+To skip building and link with system-wide RocksDB, use the `system-rocksdb` Cabal flag. This is not recommended, since this package is only developed with the latest release of RocksDB.
 
 ## Windows support
 

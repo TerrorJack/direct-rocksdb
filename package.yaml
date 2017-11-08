@@ -1,5 +1,5 @@
 name: direct-rocksdb
-version: 0.0.1
+version: 0.0.2
 category: Database
 synopsis: Bindings to RocksDB.
 stability: alpha
@@ -18,7 +18,7 @@ custom-setup:
   dependencies:
     - base >= 4.10 && < 5
     - Cabal >= 2.0 && < 2.2
-    - cabal-toolkit
+    - cabal-toolkit >= 0.0.3
     - directory
     - filepath
 

@@ -51,3 +51,5 @@ tests:
     ghc-options: -threaded -with-rtsopts=-N
     dependencies:
       - direct-rocksdb
+      - directory
+      - filepath

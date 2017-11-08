@@ -1,9 +1,14 @@
 import Control.Exception.Safe
 import Data.Default.Class
-import Data.Proxy
-import Database.RocksDB.Marshal
+import Database.RocksDB.DB
 import Database.RocksDB.Options
+import Foreign
+import System.Directory
+import System.FilePath
 
 main :: IO ()
-main =
-  bracket (marshal (def :: Options)) (finalize (Proxy :: Proxy Options)) print
+main = do
+  tmp_dir <- getTemporaryDirectory
+  let opts = def {createIfMissing = Just True}
+      db_path = tmp_dir </> "direct-rocksdb-test.rocksdb"
+  bracket (openDB opts db_path) finalizeForeignPtr print

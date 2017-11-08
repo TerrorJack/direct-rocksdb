@@ -7,11 +7,13 @@ Bindings to [RocksDB](https://github.com/facebook/rocksdb).
 
 ## Dependencies
 
-This package builds RocksDB in place and doesn't link with system-wide RocksDB. Requires:
+This package builds RocksDB in place by default. This requires:
 
 * [`cmake`](https://cmake.org/)
 * [`ninja`](http://ninja-build.org/)
 * `awk`
+
+To link with system-wide RocksDB, use the `system-rocksdb` Cabal flag.
 
 ## Windows support
 

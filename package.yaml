@@ -24,12 +24,10 @@ custom-setup:
 
 ghc-options: -Wall
 
-extra-libraries: stdc++
-
-when:
-  - condition: os(windows)
-    extra-libraries:
-      - rpcrt4
+flags:
+  system-rocksdb:
+    default: false
+    manual: false
 
 dependencies:
   - base >= 4.10 && < 5

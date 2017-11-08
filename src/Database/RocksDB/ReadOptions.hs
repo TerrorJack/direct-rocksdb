@@ -8,8 +8,8 @@ module Database.RocksDB.ReadOptions
 
 import Database.RocksDB.Internals
 import Database.RocksDB.Utils
-import Foreign
-import GHC.ForeignPtr
+import Foreign hiding (newForeignPtr)
+import Foreign.Concurrent
 
 data ReadOptions = ReadOptions
   { verityChecksums :: !(Maybe Bool)
@@ -28,4 +28,4 @@ marshalReadOptions ReadOptions {..} = do
   setBoolOptions verityChecksums $
     c_rocksdb_readoptions_set_verify_checksums ropts_p
   setBoolOptions fillCache $ c_rocksdb_readoptions_set_fill_cache ropts_p
-  newConcForeignPtr ropts_p $ c_rocksdb_readoptions_destroy ropts_p
+  newForeignPtr ropts_p $ c_rocksdb_readoptions_destroy ropts_p

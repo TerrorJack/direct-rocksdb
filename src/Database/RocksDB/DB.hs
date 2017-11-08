@@ -11,9 +11,9 @@ import qualified Data.ByteString.Unsafe as BS
 import Database.RocksDB.Internals
 import Database.RocksDB.Options
 import Database.RocksDB.Utils
-import Foreign
+import Foreign hiding (newForeignPtr)
 import Foreign.C
-import GHC.ForeignPtr
+import Foreign.Concurrent
 
 openDB :: Options -> FilePath -> IO (ForeignPtr Rocksdb)
 {-# INLINEABLE openDB #-}
@@ -22,7 +22,7 @@ openDB opts path = do
   withForeignPtr opts_fptr $ \opts_ptr ->
     withCString path $ \path_ptr -> do
       db_ptr <- withErrorMessagePtr $ c_rocksdb_open opts_ptr path_ptr
-      newConcForeignPtr db_ptr $ c_rocksdb_close db_ptr
+      newForeignPtr db_ptr $ c_rocksdb_close db_ptr
 
 putDB ::
      ForeignPtr Rocksdb

@@ -8,8 +8,8 @@ module Database.RocksDB.Options
 
 import Database.RocksDB.Internals
 import Database.RocksDB.Utils
-import Foreign
-import GHC.ForeignPtr
+import Foreign hiding (newForeignPtr)
+import Foreign.Concurrent
 
 data Options = Options
   { totalThreads :: !(Maybe Int)
@@ -27,4 +27,4 @@ marshalOptions Options {..} = do
   setIntOptions totalThreads $c_rocksdb_options_increase_parallelism opts_p
   setBoolOptions createIfMissing $
     c_rocksdb_options_set_create_if_missing opts_p
-  newConcForeignPtr opts_p $ c_rocksdb_options_destroy opts_p
+  newForeignPtr opts_p $ c_rocksdb_options_destroy opts_p

@@ -8,8 +8,8 @@ module Database.RocksDB.WriteOptions
 
 import Database.RocksDB.Internals
 import Database.RocksDB.Utils
-import Foreign
-import GHC.ForeignPtr
+import Foreign hiding (newForeignPtr)
+import Foreign.Concurrent
 
 data WriteOptions = WriteOptions
   { sync :: !(Maybe Bool)
@@ -26,4 +26,4 @@ marshalWriteOptions WriteOptions {..} = do
   wopts_p <- c_rocksdb_writeoptions_create
   setBoolOptions sync $ c_rocksdb_writeoptions_set_sync wopts_p
   setIntOptions disableWAL $ c_rocksdb_writeoptions_disable_WAL wopts_p
-  newConcForeignPtr wopts_p $ c_rocksdb_writeoptions_destroy wopts_p
+  newForeignPtr wopts_p $ c_rocksdb_writeoptions_destroy wopts_p

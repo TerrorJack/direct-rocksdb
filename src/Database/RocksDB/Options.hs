@@ -10,6 +10,7 @@ import Data.Foldable
 import Database.RocksDB.Internals
 import Database.RocksDB.Marshal
 import Foreign
+import GHC.ForeignPtr
 
 data Options = Options
   { totalThreads :: !(Maybe Int)
@@ -20,7 +21,7 @@ instance Default Options where
   def = Options {totalThreads = Nothing, createIfMissing = Nothing}
 
 instance Marshal Options where
-  type CType Options = Ptr RocksdbOptions
+  type CType Options = ForeignPtr RocksdbOptions
   marshal Options {..} = do
     opts_p <- c_rocksdb_options_create
     for_ totalThreads $ \total_threads ->
@@ -30,7 +31,7 @@ instance Marshal Options where
       if flag
         then 1
         else 0
-    pure opts_p
+    newConcForeignPtr opts_p $ c_rocksdb_options_destroy opts_p
   {-# INLINEABLE marshal #-}
-  finalize _ = c_rocksdb_options_destroy
+  finalize _ = finalizeForeignPtr
   {-# INLINEABLE finalize #-}

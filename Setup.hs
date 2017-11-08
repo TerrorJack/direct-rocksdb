@@ -69,9 +69,7 @@ main =
                        case r of
                          Just s -> ["--", s]
                          _ -> []
-                runLBIProgram
-                  lbi
-                  cmakeProgram
+                runLBIProgram lbi cmakeProgram $
                   ["--build", ".", "--target", "librocksdb.a"] ++
                   ninja_extra_args
                 copyFile "librocksdb.a" $

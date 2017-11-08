@@ -1,5 +1,5 @@
 name: direct-rocksdb
-version: 0.0.2
+version: 0.0.3
 category: Database
 synopsis: Bindings to RocksDB.
 stability: alpha
@@ -38,6 +38,8 @@ dependencies:
 
 library:
   source-dirs: src
+  other-modules:
+    - Database.RocksDB.Utils
   other-extensions:
     - DeriveAnyClass
     - RecordWildCards

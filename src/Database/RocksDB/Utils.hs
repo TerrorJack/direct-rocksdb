@@ -1,9 +1,14 @@
 module Database.RocksDB.Utils
   ( setIntOptions
   , setBoolOptions
+  , withErrorMessagePtr
   ) where
 
+import Control.Exception.Safe
+import qualified Data.ByteString as BS
 import Data.Foldable
+import Foreign
+import Foreign.C
 
 setIntOptions :: Integral t => Maybe Int -> (t -> IO ()) -> IO ()
 {-# INLINEABLE setIntOptions #-}
@@ -17,3 +22,15 @@ setBoolOptions field cont =
     if val
       then 1
       else 0
+
+withErrorMessagePtr :: (Ptr (Ptr CChar) -> IO r) -> IO r
+{-# INLINEABLE withErrorMessagePtr #-}
+withErrorMessagePtr cont =
+  alloca $ \p -> do
+    r <- cont p
+    p' <- peek p
+    if p' == nullPtr
+      then pure r
+      else do
+        msg <- BS.packCString p'
+        throw $ RocksDBException msg

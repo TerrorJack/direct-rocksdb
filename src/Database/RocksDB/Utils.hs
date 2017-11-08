@@ -7,6 +7,7 @@ module Database.RocksDB.Utils
 import Control.Exception.Safe
 import qualified Data.ByteString as BS
 import Data.Foldable
+import Database.RocksDB.Exceptions
 import Foreign
 import Foreign.C
 

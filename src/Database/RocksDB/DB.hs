@@ -8,9 +8,9 @@ module Database.RocksDB.DB
 
 import qualified Data.ByteString as BS
 import qualified Data.ByteString.Unsafe as BS
-import Database.RocksDB.Exceptions
 import Database.RocksDB.Internals
 import Database.RocksDB.Options
+import Database.RocksDB.Utils
 import Foreign
 import Foreign.C
 import GHC.ForeignPtr

@@ -60,4 +60,5 @@ getDB db_fptr ropts_fptr k_bs =
             withErrorMessagePtr $
             c_rocksdb_get db_ptr ropts_ptr k_buf (fromIntegral k_len) v_len_buf
           v_len <- fromIntegral <$> peek v_len_buf
-          BS.unsafePackMallocCStringLen (v_buf, v_len)
+          BS.unsafePackCStringFinalizer (castPtr v_buf) v_len $
+            c_rocksdb_free $ castPtr v_buf

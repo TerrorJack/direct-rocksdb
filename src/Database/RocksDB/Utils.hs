@@ -5,9 +5,11 @@ module Database.RocksDB.Utils
   ) where
 
 import Control.Exception
-import qualified Data.ByteString as BS
+import qualified Data.ByteString.Internal as BS
+import qualified Data.ByteString.Unsafe as BS
 import Data.Foldable
 import Database.RocksDB.Exceptions
+import Database.RocksDB.Internals
 import Foreign
 import Foreign.C
 
@@ -27,11 +29,14 @@ setBoolOptions field cont =
 withErrorMessagePtr :: (Ptr (Ptr CChar) -> IO r) -> IO r
 {-# INLINEABLE withErrorMessagePtr #-}
 withErrorMessagePtr cont =
-  alloca $ \p -> do
-    r <- cont p
-    p' <- peek p
-    if p' == nullPtr
+  alloca $ \msg_buf_p -> do
+    r <- cont msg_buf_p
+    msg_buf <- peek msg_buf_p
+    if msg_buf == nullPtr
       then pure r
       else do
-        msg <- BS.packCString p'
+        msg_len <- fromIntegral <$> BS.c_strlen msg_buf
+        msg <-
+          BS.unsafePackCStringFinalizer (castPtr msg_buf) msg_len $
+          c_rocksdb_free $ castPtr msg_buf
         throwIO $ RocksDBException msg

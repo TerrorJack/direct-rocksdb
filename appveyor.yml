@@ -6,7 +6,6 @@ image: Visual Studio 2017
 
 cache:
   - "%APPDATA%\\stack"
-  - .stack-work
 
 build_script:
   - choco install haskell-stack

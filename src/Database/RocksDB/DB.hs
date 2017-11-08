@@ -10,6 +10,7 @@ import Foreign.C
 import GHC.ForeignPtr
 
 openDB :: Options -> FilePath -> IO (ForeignPtr Rocksdb)
+{-# INLINEABLE openDB #-}
 openDB opts path = do
   opts_fptr <- marshalOptions opts
   withForeignPtr opts_fptr $ \opts_ptr ->

@@ -1,14 +1,13 @@
 {-# LANGUAGE RecordWildCards #-}
-{-# LANGUAGE TypeFamilies #-}
 
 module Database.RocksDB.Options
   ( Options(..)
+  , defaultOptions
+  , marshalOptions
   ) where
 
-import Data.Default.Class
 import Data.Foldable
 import Database.RocksDB.Internals
-import Database.RocksDB.Marshal
 import Foreign
 import GHC.ForeignPtr
 
@@ -17,21 +16,17 @@ data Options = Options
   , createIfMissing :: !(Maybe Bool)
   }
 
-instance Default Options where
-  def = Options {totalThreads = Nothing, createIfMissing = Nothing}
+defaultOptions :: Options
+defaultOptions = Options {totalThreads = Nothing, createIfMissing = Nothing}
 
-instance Marshal Options where
-  type CType Options = ForeignPtr RocksdbOptions
-  marshal Options {..} = do
-    opts_p <- c_rocksdb_options_create
-    for_ totalThreads $ \total_threads ->
-      c_rocksdb_options_increase_parallelism opts_p $ fromIntegral total_threads
-    for_ createIfMissing $ \flag ->
-      c_rocksdb_options_set_create_if_missing opts_p $
-      if flag
-        then 1
-        else 0
-    newConcForeignPtr opts_p $ c_rocksdb_options_destroy opts_p
-  {-# INLINEABLE marshal #-}
-  finalize _ = finalizeForeignPtr
-  {-# INLINEABLE finalize #-}
+marshalOptions :: Options -> IO (ForeignPtr RocksdbOptions)
+marshalOptions Options {..} = do
+  opts_p <- c_rocksdb_options_create
+  for_ totalThreads $ \total_threads ->
+    c_rocksdb_options_increase_parallelism opts_p $ fromIntegral total_threads
+  for_ createIfMissing $ \flag ->
+    c_rocksdb_options_set_create_if_missing opts_p $
+    if flag
+      then 1
+      else 0
+  newConcForeignPtr opts_p $ c_rocksdb_options_destroy opts_p

@@ -34,7 +34,6 @@ when:
 dependencies:
   - base >= 4.10 && < 5
   - bytestring
-  - data-default-class
   - safe-exceptions
 
 library:
@@ -42,7 +41,6 @@ library:
   other-extensions:
     - DeriveAnyClass
     - RecordWildCards
-    - TypeFamilies
 
 tests:
   direct-rocksdb-test:

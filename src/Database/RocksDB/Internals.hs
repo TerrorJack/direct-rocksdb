@@ -590,10 +590,6 @@ foreign import ccall unsafe "rocksdb_writebatch_wi_create"
                c_rocksdb_writebatch_wi_create ::
                CSize -> CUChar -> IO (Ptr RocksdbWritebatchWi)
 
-foreign import ccall unsafe "rocksdb_writebatch_wi_create_from"
-               c_rocksdb_writebatch_wi_create_from ::
-               Ptr CChar -> CSize -> IO (Ptr RocksdbWritebatchWi)
-
 foreign import ccall unsafe "rocksdb_writebatch_wi_destroy"
                c_rocksdb_writebatch_wi_destroy :: Ptr RocksdbWritebatchWi -> IO ()
 
@@ -1268,16 +1264,6 @@ foreign import ccall unsafe
 
 foreign import ccall unsafe "rocksdb_options_set_bytes_per_sync"
                c_rocksdb_options_set_bytes_per_sync ::
-               Ptr RocksdbOptions -> Word64 -> IO ()
-
-foreign import ccall unsafe
-               "rocksdb_options_set_wal_bytes_per_sync"
-               c_rocksdb_options_set_wal_bytes_per_sync ::
-               Ptr RocksdbOptions -> Word64 -> IO ()
-
-foreign import ccall unsafe
-               "rocksdb_options_set_writable_file_max_buffer_size"
-               c_rocksdb_options_set_writable_file_max_buffer_size ::
                Ptr RocksdbOptions -> Word64 -> IO ()
 
 foreign import ccall unsafe
@@ -1964,15 +1950,6 @@ foreign import ccall unsafe "rocksdb_transaction_rollback"
                c_rocksdb_transaction_rollback ::
                Ptr RocksdbTransaction -> Ptr (Ptr CChar) -> IO ()
 
-foreign import ccall unsafe "rocksdb_transaction_set_savepoint"
-               c_rocksdb_transaction_set_savepoint ::
-               Ptr RocksdbTransaction -> IO ()
-
-foreign import ccall unsafe
-               "rocksdb_transaction_rollback_to_savepoint"
-               c_rocksdb_transaction_rollback_to_savepoint ::
-               Ptr RocksdbTransaction -> Ptr (Ptr CChar) -> IO ()
-
 foreign import ccall unsafe "rocksdb_transaction_destroy"
                c_rocksdb_transaction_destroy :: Ptr RocksdbTransaction -> IO ()
 
@@ -2093,13 +2070,6 @@ foreign import ccall unsafe "rocksdb_transaction_create_iterator"
                Ptr RocksdbTransaction ->
                  Ptr RocksdbReadoptions -> IO (Ptr RocksdbIterator)
 
-foreign import ccall unsafe
-               "rocksdb_transaction_create_iterator_cf"
-               c_rocksdb_transaction_create_iterator_cf ::
-               Ptr RocksdbTransaction ->
-                 Ptr RocksdbReadoptions ->
-                   Ptr RocksdbColumnFamilyHandle -> IO (Ptr RocksdbIterator)
-
 foreign import ccall unsafe "rocksdb_transactiondb_create_iterator"
                c_rocksdb_transactiondb_create_iterator ::
                Ptr RocksdbTransactiondb ->
@@ -2119,27 +2089,6 @@ foreign import ccall unsafe "rocksdb_optimistictransactiondb_open"
                Ptr RocksdbOptions ->
                  Ptr CChar ->
                    Ptr (Ptr CChar) -> IO (Ptr RocksdbOptimistictransactiondb)
-
-foreign import ccall unsafe
-               "rocksdb_optimistictransactiondb_open_column_families"
-               c_rocksdb_optimistictransactiondb_open_column_families ::
-               Ptr RocksdbOptions ->
-                 Ptr CChar ->
-                   CInt ->
-                     Ptr (Ptr CChar) ->
-                       Ptr (Ptr RocksdbOptions) ->
-                         Ptr (Ptr RocksdbColumnFamilyHandle) ->
-                           Ptr (Ptr CChar) -> IO (Ptr RocksdbOptimistictransactiondb)
-
-foreign import ccall unsafe
-               "rocksdb_optimistictransactiondb_get_base_db"
-               c_rocksdb_optimistictransactiondb_get_base_db ::
-               Ptr RocksdbOptimistictransactiondb -> IO (Ptr Rocksdb)
-
-foreign import ccall unsafe
-               "rocksdb_optimistictransactiondb_close_base_db"
-               c_rocksdb_optimistictransactiondb_close_base_db ::
-               Ptr Rocksdb -> IO ()
 
 foreign import ccall unsafe "rocksdb_optimistictransaction_begin"
                c_rocksdb_optimistictransaction_begin ::

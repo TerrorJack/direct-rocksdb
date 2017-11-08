@@ -17,7 +17,7 @@ main :: IO ()
 main =
   defaultMainWithHooks
     simpleUserHooks
-    { hookedPrograms = [cmakeProgram, ninjaProgram]
+    { hookedPrograms = [cmakeProgram]
     , confHook =
         \t f -> do
           lbi <- confHook simpleUserHooks t f
@@ -58,18 +58,22 @@ main =
                   lbi
                   cmakeProgram
                   [ rocksdb_srcdir
+                  , "-DCMAKE_BUILD_TYPE=Release"
                   , "-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=true"
                   , "-G"
                   , "Ninja"
                   ]
                 ninja_extra_args <-
-                  do r <- lookupEnv "NINJA_J"
+                  do r <- lookupEnv "NINJA_FLAGS"
                      pure $
                        case r of
-                         Just s -> ["-j", s]
+                         Just s -> ["--", s]
                          _ -> []
-                runLBIProgram lbi ninjaProgram $
-                  ninja_extra_args ++ ["librocksdb.a"]
+                runLBIProgram
+                  lbi
+                  cmakeProgram
+                  ["--build", ".", "--target", "librocksdb.a"] ++
+                  ninja_extra_args
                 copyFile "librocksdb.a" $
                   lib_installdir </> "lib" ++ rocksdb_libname <.> "a"
               pure

@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: terrorjack/rakuen:nightly-2017-11-08
     environment:
-      - NINJA_J: 2
+      - NINJA_FLAGS: -j2
     steps:
       - checkout
       - run: stack --no-terminal test --haddock

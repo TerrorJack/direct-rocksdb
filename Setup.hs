@@ -70,7 +70,7 @@ main =
                       , "--config"
                       , "Release"
                       ]
-                    copyFile "rocksdb.lib" $
+                    copyFile ("Release" </> "rocksdb.lib") $
                       lib_installdir </> rocksdb_libname <.> "lib"
                   _ -> do
                     runLBIProgram

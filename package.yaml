@@ -51,3 +51,5 @@ tests:
       - direct-rocksdb
       - directory
       - filepath
+    other-extensions:
+      - OverloadedStrings

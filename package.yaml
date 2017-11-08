@@ -33,9 +33,13 @@ when:
 
 dependencies:
   - base >= 4.10 && < 5
+  - data-default-class
 
 library:
   source-dirs: src
+  other-extensions:
+    - RecordWildCards
+    - TypeFamilies
 
 tests:
   direct-rocksdb-test:
@@ -44,3 +48,4 @@ tests:
     ghc-options: -threaded -with-rtsopts=-N
     dependencies:
       - direct-rocksdb
+      - safe-exceptions

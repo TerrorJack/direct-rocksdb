@@ -1,5 +1,3 @@
-{-# LANGUAGE ScopedTypeVariables #-}
-
 module Database.RocksDB.DB
   ( openDB
   , putDB
@@ -55,7 +53,7 @@ getDB db_fptr ropts_fptr k_bs =
   withForeignPtr db_fptr $ \db_ptr ->
     withForeignPtr ropts_fptr $ \ropts_ptr ->
       BS.unsafeUseAsCStringLen k_bs $ \(k_buf, k_len) ->
-        alloca $ \(v_len_buf :: Ptr CSize) -> do
+        alloca $ \v_len_buf -> do
           v_buf <-
             withErrorMessagePtr $
             c_rocksdb_get db_ptr ropts_ptr k_buf (fromIntegral k_len) v_len_buf

@@ -41,7 +41,6 @@ library:
     - DeriveAnyClass
     - InterruptibleFFI
     - RecordWildCards
-    - ScopedTypeVariables
 
 tests:
   direct-rocksdb-test:

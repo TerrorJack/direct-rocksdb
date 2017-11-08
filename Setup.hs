@@ -53,27 +53,46 @@ main =
                       CLibName
               for_ [rocksdb_builddir, lib_installdir] $
                 createDirectoryIfMissing True
-              withCurrentDirectory rocksdb_builddir $ do
-                runLBIProgram
-                  lbi
-                  cmakeProgram
-                  [ rocksdb_srcdir
-                  , "-DCMAKE_BUILD_TYPE=Release"
-                  , "-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=true"
-                  , "-G"
-                  , "Ninja"
-                  ]
-                ninja_extra_args <-
-                  do r <- lookupEnv "NINJA_FLAGS"
-                     pure $
-                       case r of
-                         Just s -> ["--", s]
-                         _ -> []
-                runLBIProgram lbi cmakeProgram $
-                  ["--build", ".", "--target", "librocksdb.a"] ++
-                  ninja_extra_args
-                copyFile "librocksdb.a" $
-                  lib_installdir </> "lib" ++ rocksdb_libname <.> "a"
+              withCurrentDirectory rocksdb_builddir $
+                case buildOS of
+                  Windows -> do
+                    runLBIProgram
+                      lbi
+                      cmakeProgram
+                      [rocksdb_srcdir, "-G", "Visual Studio 15 2017 Win64"]
+                    runLBIProgram
+                      lbi
+                      cmakeProgram
+                      [ "--build"
+                      , "."
+                      , "--target"
+                      , "rocksdb"
+                      , "--config"
+                      , "Release"
+                      ]
+                    copyFile "rocksdb.lib" $
+                      lib_installdir </> rocksdb_libname <.> "lib"
+                  _ -> do
+                    runLBIProgram
+                      lbi
+                      cmakeProgram
+                      [ rocksdb_srcdir
+                      , "-DCMAKE_BUILD_TYPE=Release"
+                      , "-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=true"
+                      , "-G"
+                      , "Ninja"
+                      ]
+                    ninja_extra_args <-
+                      do r <- lookupEnv "NINJA_FLAGS"
+                         pure $
+                           case r of
+                             Just s -> ["--", s]
+                             _ -> []
+                    runLBIProgram lbi cmakeProgram $
+                      ["--build", ".", "--target", "librocksdb.a"] ++
+                      ninja_extra_args
+                    copyFile "librocksdb.a" $
+                      lib_installdir </> "lib" ++ rocksdb_libname <.> "a"
               pure
                 lbi
                 { localPkgDescr =

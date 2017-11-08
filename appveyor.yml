@@ -2,6 +2,8 @@ version: 0.0.1.{build}
 
 shallow_clone: true
 
+image: Visual Studio 2017
+
 cache:
   - "%APPDATA%\\stack"
   - .stack-work
@@ -12,8 +14,6 @@ build_script:
   - stack --no-terminal exec pacman -- -Syu --force --noconfirm --noprogressbar
   - stack --no-terminal exec pacman -- -Syu --force --noconfirm --noprogressbar
   - stack --no-terminal exec pacman -- -S mingw-w64-x86_64-cmake --force --needed --noconfirm --noprogressbar
-  - stack --no-terminal exec pacman -- -S mingw-w64-x86_64-gcc --force --needed --noconfirm --noprogressbar
-  - stack --no-terminal exec pacman -- -S mingw-w64-x86_64-ninja --force --needed --noconfirm --noprogressbar
   - stack --no-terminal test --haddock
 
 test: off

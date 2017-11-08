@@ -27,4 +27,4 @@ Some RocksDB functions require passing in a pointer to an error message buffer f
 
 ## About Windows support
 
-Not working at the moment (builds but crashes when built with mingw-w64 toolchain). May switch to MSVC to fix it.
+Requires `cmake` and Visual Studio 2017.

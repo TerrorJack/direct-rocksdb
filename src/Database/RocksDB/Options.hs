@@ -31,4 +31,6 @@ instance Marshal Options where
         then 1
         else 0
     pure opts_p
+  {-# INLINEABLE marshal #-}
   finalize _ = c_rocksdb_options_destroy
+  {-# INLINEABLE finalize #-}

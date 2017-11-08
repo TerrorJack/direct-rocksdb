@@ -33,11 +33,14 @@ when:
 
 dependencies:
   - base >= 4.10 && < 5
+  - bytestring
   - data-default-class
+  - safe-exceptions
 
 library:
   source-dirs: src
   other-extensions:
+    - DeriveAnyClass
     - RecordWildCards
     - TypeFamilies
 
@@ -48,4 +51,3 @@ tests:
     ghc-options: -threaded -with-rtsopts=-N
     dependencies:
       - direct-rocksdb
-      - safe-exceptions

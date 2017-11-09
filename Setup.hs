@@ -23,7 +23,7 @@ main =
           lbi <- confHook simpleUserHooks t f
           let extra_libs =
                 case buildOS of
-                  Windows -> ["msvcrt"]
+                  Windows -> ["msvcrt", "msvcp140"]
                   _ -> ["stdc++"]
               [system_rocksdb] =
                 [v | (k, v) <- flagAssignment lbi, k == "system-rocksdb"]

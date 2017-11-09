@@ -22,10 +22,9 @@ main =
         \t f -> do
           lbi <- confHook simpleUserHooks t f
           let extra_libs =
-                "stdc++" :
-                (case buildOS of
-                   Windows -> ["rpcrt4"]
-                   _ -> [])
+                case buildOS of
+                  Windows -> ["msvcrt"]
+                  _ -> ["stdc++"]
               [system_rocksdb] =
                 [v | (k, v) <- flagAssignment lbi, k == "system-rocksdb"]
           if system_rocksdb

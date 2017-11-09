@@ -1,7 +1,6 @@
 # direct-rocksdb
 
 [![CircleCI](https://circleci.com/gh/TerrorJack/direct-rocksdb/tree/master.svg?style=shield)](https://circleci.com/gh/TerrorJack/direct-rocksdb/tree/master)
-[![AppVeyor](https://ci.appveyor.com/api/projects/status/github/TerrorJack/direct-rocksdb?branch=master&svg=true)](https://ci.appveyor.com/project/TerrorJack/direct-rocksdb?branch=master)
 [![Hackage](https://img.shields.io/hackage/v/direct-rocksdb.svg)](https://hackage.haskell.org/package/direct-rocksdb)
 [![Stackage Nightly](https://www.stackage.org/package/direct-rocksdb/badge/nightly)](https://www.stackage.org/nightly/package/direct-rocksdb)
 
@@ -29,4 +28,4 @@ Some RocksDB functions require passing in a pointer to an error message buffer f
 
 ## About Windows support
 
-Requires `cmake` and Visual Studio 2017.
+Unsupported for now.

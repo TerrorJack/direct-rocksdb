@@ -68,8 +68,6 @@ main =
                       , "rocksdb"
                       , "--config"
                       , "Release"
-                      , "--"
-                      , "/m"
                       ]
                     copyFile ("Release" </> "rocksdb.lib") $
                       lib_installdir </> rocksdb_libname <.> "lib"
